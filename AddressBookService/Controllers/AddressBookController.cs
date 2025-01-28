@@ -31,6 +31,7 @@ public class AddressBookController : ControllerBase
     public async Task<ActionResult<AddressBookEntry>> CreateEntry([FromForm] AddressBookEntryDTO entryDto)
     {
         var entry = await _addressBookService.CreateEntryAsync(entryDto);
+        if (entry == null) return BadRequest(new { error = "Entry creation failed: Invalid job ID or department ID" });
         return CreatedAtAction(nameof(GetEntry), new { id = entry.Id }, entry);
     }
 

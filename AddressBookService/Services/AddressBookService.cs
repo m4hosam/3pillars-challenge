@@ -25,15 +25,24 @@ public class AddressBookService(AddressBookContext context, IWebHostEnvironment 
             .FirstOrDefaultAsync(e => e.Id == id);
     }
 
-    public async Task<AddressBookEntry> CreateEntryAsync(AddressBookEntryDTO entryDto)
+    public async Task<AddressBookEntry?> CreateEntryAsync(AddressBookEntryDTO entryDto)
     {
         var photoPath = await SavePhotoAsync(entryDto.Photo);
+
+        var job = await _context.Jobs.FindAsync(entryDto.JobId);
+        var department = await _context.Departments.FindAsync(entryDto.DepartmentId);
+        if (job == null || department == null)
+        {
+            return null;
+        }
 
         var entry = new AddressBookEntry
         {
             FullName = entryDto.FullName,
             JobId = entryDto.JobId,
             DepartmentId = entryDto.DepartmentId,
+            Job = job,
+            Department = department,
             MobileNumber = entryDto.MobileNumber,
             DateOfBirth = entryDto.DateOfBirth,
             Address = entryDto.Address,
@@ -158,8 +167,8 @@ public class AddressBookService(AddressBookContext context, IWebHostEnvironment 
     private async Task<string> SavePhotoAsync(IFormFile photo)
     {
         if (photo == null) return default!;
-
-        var uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads");
+        var rootPath = _environment.WebRootPath ?? _environment.ContentRootPath;
+        var uploadsFolder = Path.Combine(rootPath, "uploads");
         if (!Directory.Exists(uploadsFolder))
         {
             Directory.CreateDirectory(uploadsFolder);
@@ -172,15 +181,15 @@ public class AddressBookService(AddressBookContext context, IWebHostEnvironment 
         {
             await photo.CopyToAsync(fileStream);
         }
-
-        return uniqueFileName;
+        var relativePath = Path.Combine(uniqueFileName);
+        return relativePath;
     }
 
     private void DeletePhoto(string photoPath)
     {
         if (string.IsNullOrEmpty(photoPath)) return;
-
-        var filePath = Path.Combine(_environment.WebRootPath, "uploads", photoPath);
+        var rootPath = _environment.WebRootPath ?? _environment.ContentRootPath;
+        var filePath = Path.Combine(rootPath, "uploads", photoPath);
         if (File.Exists(filePath))
         {
             File.Delete(filePath);
