@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import addressBookReducer from "./addressBookSlice";
+import addressBookReducer from "./slices/addressBookSlice";
 
 export const store = configureStore({
   reducer: {

@@ -1,49 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { Table, Button, Modal, message } from "antd";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import { api } from "../api";
-import AddressBookForm from "./AddressBookForm";
-import { AddressBookEntry } from "../types";
+import React from "react";
+import { Table, Button } from "antd";
+import type { AddressBookEntry } from "../types";
 
-const AddressBookTable: React.FC = () => {
-  const [data, setData] = useState<AddressBookEntry[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [editingEntry, setEditingEntry] = useState<AddressBookEntry | null>(
-    null
-  );
-  const [isModalVisible, setIsModalVisible] = useState(false);
+interface AddressBookTableProps {
+  data: AddressBookEntry[];
+  loading: boolean;
+  onEdit: (record: AddressBookEntry) => void;
+  onDelete: (id: number) => void;
+}
 
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const response = await api.getAddressBook();
-      setData(response.data);
-    } catch (error) {
-      message.error("Failed to fetch address book data");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const handleDelete = (id: number) => {
-    Modal.confirm({
-      title: "Are you sure you want to delete this entry?",
-      onOk: async () => {
-        try {
-          await api.deleteEntry(id);
-          message.success("Entry deleted successfully");
-          fetchData();
-        } catch (error) {
-          message.error("Failed to delete entry");
-        }
-      },
-    });
-  };
-
+export const AddressBookTable: React.FC<AddressBookTableProps> = ({
+  data,
+  loading,
+  onEdit,
+  onDelete,
+}) => {
   const columns = [
     {
       title: "Full Name",
@@ -61,66 +32,32 @@ const AddressBookTable: React.FC = () => {
       key: "department",
     },
     {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
-    },
-    {
       title: "Mobile",
       dataIndex: "mobileNumber",
       key: "mobileNumber",
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
     },
     {
       title: "Actions",
       key: "actions",
       render: (_: any, record: AddressBookEntry) => (
         <>
-          <Button
-            icon={<EditOutlined />}
-            onClick={() => {
-              setEditingEntry(record);
-              setIsModalVisible(true);
-            }}
-          />
-          <Button
-            icon={<DeleteOutlined />}
-            danger
-            onClick={() => handleDelete(record.id)}
-          />
+          <Button type="link" onClick={() => onEdit(record)}>
+            Edit
+          </Button>
+          <Button type="link" danger onClick={() => onDelete(record.id)}>
+            Delete
+          </Button>
         </>
       ),
     },
   ];
 
   return (
-    <div>
-      <Button
-        type="primary"
-        onClick={() => {
-          setEditingEntry(null);
-          setIsModalVisible(true);
-        }}
-        style={{ marginBottom: 16 }}
-      >
-        Add New Entry
-      </Button>
-      <Table
-        columns={columns}
-        dataSource={data}
-        loading={loading}
-        rowKey="id"
-      />
-      <AddressBookForm
-        visible={isModalVisible}
-        onCancel={() => setIsModalVisible(false)}
-        onSuccess={() => {
-          setIsModalVisible(false);
-          fetchData();
-        }}
-        initialValues={editingEntry}
-      />
-    </div>
+    <Table columns={columns} dataSource={data} loading={loading} rowKey="id" />
   );
 };
-
-export default AddressBookTable;

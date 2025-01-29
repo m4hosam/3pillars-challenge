@@ -41,16 +41,15 @@ interface AddressBookEntry {
   id: number;
   fullName: string;
   jobId: number;
-  job: Job;
   departmentId: number;
-  department: Department;
   mobileNumber: string;
   dateOfBirth: string;
   address: string;
   email: string;
   password: string;
-  photoPath: string;
-  age: number;
+  photo: string;
+  job?: Job;
+  department?: Department;
 }
 
 export type { Job, Department, AddressBookEntry, AddressBookData };
