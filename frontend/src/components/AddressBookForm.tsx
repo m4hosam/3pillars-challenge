@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Input, Select, DatePicker, Upload, Button, Image } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import type { Job, Department, AddressBookEntry } from "../types";
@@ -18,6 +18,23 @@ export const AddressBookForm: React.FC<AddressBookFormProps> = ({
   editingEntry,
   onFinish,
 }) => {
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (editingEntry?.photoPath) {
+      setPreviewImage(
+        `http://localhost:5270/uploads/${editingEntry.photoPath}`
+      );
+    }
+  }, [editingEntry]);
+
+  const handleImagePreview = (file: any) => {
+    const reader = new FileReader();
+    reader.onload = (e) => setPreviewImage(e.target?.result as string);
+    reader.readAsDataURL(file);
+    return false; // Prevent auto-upload
+  };
+
   return (
     <Form form={form} layout="vertical" onFinish={onFinish}>
       <Form.Item
@@ -116,37 +133,38 @@ export const AddressBookForm: React.FC<AddressBookFormProps> = ({
         </Form.Item>
       )}
 
-      {editingEntry?.photoPath && (
-        <div
-          style={{
-            flexDirection: "row",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
+      {/* Image Upload & Preview */}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          gap: "1rem",
+        }}
+      >
+        {previewImage && (
           <Image
-            src={`http://localhost:5270/uploads/${editingEntry.photoPath}`}
-            alt="Current Photo"
+            src={previewImage}
+            alt="Preview"
             width={50}
             height={50}
             style={{ objectFit: "cover", borderRadius: "50%" }}
             fallback="https://cdn-icons-png.flaticon.com/512/9131/9131478.png"
           />
-          <Form.Item
-            name="photo"
-            style={{
-              marginTop: "1rem",
-              marginLeft: "1rem",
-            }}
+        )}
+
+        <Form.Item name="photo">
+          <Upload
+            beforeUpload={handleImagePreview}
+            maxCount={1}
+            accept="image/*"
           >
-            <Upload beforeUpload={() => false} maxCount={1} accept="image/*">
-              <Button icon={<UploadOutlined />}>
-                {editingEntry ? "Update Photo" : "Upload Photo"}
-              </Button>
-            </Upload>
-          </Form.Item>
-        </div>
-      )}
+            <Button icon={<UploadOutlined />}>
+              {editingEntry ? "Update Photo" : "Upload Photo"}
+            </Button>
+          </Upload>
+        </Form.Item>
+      </div>
 
       <Form.Item>
         <Button type="primary" htmlType="submit" block>

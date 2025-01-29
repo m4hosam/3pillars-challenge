@@ -58,6 +58,11 @@ export const AddressBookTable: React.FC<AddressBookTableProps> = ({
       key: "email",
     },
     {
+      title: "Date of Birth",
+      dataIndex: "dateOfBirth",
+      key: "dateOfBirth",
+    },
+    {
       title: "Actions",
       key: "actions",
       render: (_: any, record: AddressBookEntry) => (

@@ -16,6 +16,12 @@ export const api = {
   deleteAddressBookEntry: (id: number) =>
     axios.delete(`${API_BASE_URL}/addressbook/${id}`),
 
+  searchAddressBook: (params: {
+    searchTerm?: string;
+    startDate?: string;
+    endDate?: string;
+  }) => axios.get(`${API_BASE_URL}/addressbook/search`, { params }),
+
   // Jobs
   getJobs: () => axios.get(`${API_BASE_URL}/jobs`),
 
