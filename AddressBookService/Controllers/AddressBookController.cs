@@ -36,7 +36,7 @@ public class AddressBookController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateEntry(int id, [FromForm] AddressBookEntryDTO entryDto)
+    public async Task<IActionResult> UpdateEntry(int id, [FromForm] AddressBookEntryDTOPartial entryDto)
     {
         var entry = await _addressBookService.UpdateEntryAsync(id, entryDto);
         if (entry == null) return NotFound();

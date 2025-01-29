@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
 using BCrypt.Net;
+using Microsoft.AspNetCore.Identity;
 
 namespace AddressBookService.Services;
 
@@ -35,6 +36,10 @@ public class AddressBookService(AddressBookContext context, IWebHostEnvironment 
         {
             return null;
         }
+        if (entryDto.Password == null)
+        {
+            return null;
+        }
 
         var entry = new AddressBookEntry
         {
@@ -57,7 +62,7 @@ public class AddressBookService(AddressBookContext context, IWebHostEnvironment 
         return entry;
     }
 
-    public async Task<AddressBookEntry> UpdateEntryAsync(int id, AddressBookEntryDTO entryDto)
+    public async Task<AddressBookEntry> UpdateEntryAsync(int id, AddressBookEntryDTOPartial entryDto)
     {
         var entry = await _context.AddressBookEntries.FindAsync(id);
         if (entry == null) return default!;
