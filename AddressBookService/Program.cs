@@ -1,10 +1,9 @@
-// Program.cs
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container
+// Adding services to the container
 builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddDbContext<AddressBookContext>(options =>
@@ -13,7 +12,16 @@ builder.Services.AddScoped<IAddressBookService, AddressBookService.Services.Addr
 builder.Services.AddScoped<IJobService, JobService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 
-// Add Swagger/OpenAPI support
+// Adding CORS policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        builder => builder.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
+});
+
+// Adding Swagger/OpenAPI support
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -25,6 +33,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("AllowAll");
 
 app.UseStaticFiles(new StaticFileOptions
 {
