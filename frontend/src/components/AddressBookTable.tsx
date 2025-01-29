@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, Button } from "antd";
+import { Table, Button, Image } from "antd";
 import type { AddressBookEntry } from "../types";
 
 interface AddressBookTableProps {
@@ -16,6 +16,22 @@ export const AddressBookTable: React.FC<AddressBookTableProps> = ({
   onDelete,
 }) => {
   const columns = [
+    {
+      title: "Photo",
+      dataIndex: "photoPath",
+      key: "photo",
+      render: (photoPath: string) =>
+        photoPath ? (
+          <Image
+            src={`http://localhost:5270/uploads/${photoPath}`}
+            alt="Profile"
+            width={50}
+            height={50}
+            style={{ objectFit: "cover", borderRadius: "50%" }}
+            fallback="https://cdn-icons-png.flaticon.com/512/9131/9131478.png"
+          />
+        ) : null,
+    },
     {
       title: "Full Name",
       dataIndex: "fullName",

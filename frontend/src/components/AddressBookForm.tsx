@@ -1,8 +1,7 @@
 import React from "react";
-import { Form, Input, Select, DatePicker, Upload, Button } from "antd";
+import { Form, Input, Select, DatePicker, Upload, Button, Image } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import type { Job, Department, AddressBookEntry } from "../types";
-import dayjs from "dayjs";
 
 interface AddressBookFormProps {
   form: any;
@@ -98,19 +97,56 @@ export const AddressBookForm: React.FC<AddressBookFormProps> = ({
         <Input />
       </Form.Item>
 
-      <Form.Item
-        name="password"
-        label="Password"
-        rules={[{ required: !editingEntry, message: "Please input password!" }]}
-      >
-        <Input.Password />
-      </Form.Item>
+      {!editingEntry && (
+        <Form.Item
+          name="password"
+          label="Password"
+          rules={[{ required: true, message: "Please input password!" }]}
+        >
+          <Input.Password />
+        </Form.Item>
+      )}
 
-      <Form.Item name="photo" label="Photo">
-        <Upload beforeUpload={() => false} maxCount={1}>
-          <Button icon={<UploadOutlined />}>Upload Photo</Button>
-        </Upload>
-      </Form.Item>
+      {editingEntry && (
+        <Form.Item
+          name="password"
+          label="New Password (leave empty to keep current)"
+        >
+          <Input.Password />
+        </Form.Item>
+      )}
+
+      {editingEntry?.photoPath && (
+        <div
+          style={{
+            flexDirection: "row",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <Image
+            src={`http://localhost:5270/uploads/${editingEntry.photoPath}`}
+            alt="Current Photo"
+            width={50}
+            height={50}
+            style={{ objectFit: "cover", borderRadius: "50%" }}
+            fallback="https://cdn-icons-png.flaticon.com/512/9131/9131478.png"
+          />
+          <Form.Item
+            name="photo"
+            style={{
+              marginTop: "1rem",
+              marginLeft: "1rem",
+            }}
+          >
+            <Upload beforeUpload={() => false} maxCount={1} accept="image/*">
+              <Button icon={<UploadOutlined />}>
+                {editingEntry ? "Update Photo" : "Upload Photo"}
+              </Button>
+            </Upload>
+          </Form.Item>
+        </div>
+      )}
 
       <Form.Item>
         <Button type="primary" htmlType="submit" block>

@@ -22,6 +22,8 @@ export const AddressBookModal: React.FC<AddressBookModalProps> = ({
   editingEntry,
   onFinish,
 }) => {
+  // reset password to empty string
+  form.setFieldsValue({ password: "" });
   return (
     <Modal
       title={editingEntry ? "Edit Entry" : "Create New Entry"}

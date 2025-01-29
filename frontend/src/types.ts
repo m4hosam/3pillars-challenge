@@ -47,7 +47,8 @@ interface AddressBookEntry {
   address: string;
   email: string;
   password: string;
-  photo: string;
+  photoPath: string;
+  age: number;
   job?: Job;
   department?: Department;
 }
