@@ -170,17 +170,16 @@ const AddressBook: React.FC = () => {
   };
 
   return (
-    <div className="p-6">
-      <div className="mb-4">
-        <Space>
-          <Button type="primary" icon={<PlusOutlined />} onClick={handleCreate}>
+    <div>
+      <div className="mb-8">
+        <Space className="flex flex-wrap gap-2" size={[8, 16]}>
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
+            onClick={handleCreate}
+            className="sm:w-auto w-full"
+          >
             Add New Entry
-          </Button>
-          <Button onClick={() => setIsJobModalVisible(true)}>
-            Add New Job
-          </Button>
-          <Button onClick={() => setIsDepartmentModalVisible(true)}>
-            Add New Department
           </Button>
         </Space>
       </div>
@@ -202,18 +201,6 @@ const AddressBook: React.FC = () => {
         departments={departments}
         editingEntry={editingEntry}
         onFinish={handleSubmit}
-      />
-
-      <JobModal
-        visible={isJobModalVisible}
-        onCancel={() => setIsJobModalVisible(false)}
-        onFinish={handleCreateJob}
-      />
-
-      <DepartmentModal
-        visible={isDepartmentModalVisible}
-        onCancel={() => setIsDepartmentModalVisible(false)}
-        onFinish={handleCreateDepartment}
       />
     </div>
   );

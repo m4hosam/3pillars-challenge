@@ -37,8 +37,13 @@ export const AddressBookSearch: React.FC<AddressBookSearchProps> = ({
   };
 
   return (
-    <Form form={form} layout="inline" onFinish={handleSearch} className="mb-4">
-      <Form.Item name="searchTerm">
+    <Form
+      form={form}
+      layout="inline"
+      onFinish={handleSearch}
+      style={{ marginBottom: 16, gap: 16 }}
+    >
+      <Form.Item name="searchTerm" className="w-70">
         <Input
           placeholder="Search by name, email, or mobile"
           prefix={<SearchOutlined />}
@@ -50,7 +55,7 @@ export const AddressBookSearch: React.FC<AddressBookSearchProps> = ({
         <DatePicker.RangePicker />
       </Form.Item>
 
-      <Form.Item>
+      <Form.Item className="w-40 mt-8">
         <Space>
           <Button type="primary" htmlType="submit" icon={<SearchOutlined />}>
             Search
