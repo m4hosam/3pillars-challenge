@@ -131,7 +131,7 @@ public class AddressBookService(AddressBookContext context, IWebHostEnvironment 
         return await query.ToListAsync();
     }
 
-    public async Task<byte[]> ExportToExcelAsync()
+    public async Task<byte[]> ExportToExcelAsync(string hostUrl)
     {
         var entries = await GetAllEntriesAsync();
 
@@ -162,7 +162,16 @@ public class AddressBookService(AddressBookContext context, IWebHostEnvironment 
                 worksheet.Cells[row, 6].Value = entry.Age;
                 worksheet.Cells[row, 7].Value = entry.Email;
                 worksheet.Cells[row, 8].Value = entry.Address;
-                worksheet.Cells[row, 9].Value = entry.PhotoPath;
+
+                // Construct the full photo URL
+                if (!string.IsNullOrEmpty(entry.PhotoPath))
+                {
+                    string photoUrl = $"{hostUrl}/uploads/{entry.PhotoPath}";
+                    worksheet.Cells[row, 9].Value = photoUrl;
+                    worksheet.Cells[row, 9].Style.Font.UnderLine = true;
+                    worksheet.Cells[row, 9].Style.Font.Color.SetColor(System.Drawing.Color.Blue);
+                    worksheet.Cells[row, 9].Hyperlink = new Uri(photoUrl);
+                }
 
                 row++;
             }

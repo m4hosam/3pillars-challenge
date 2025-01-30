@@ -21,7 +21,8 @@ export const AddressBookTable: React.FC<AddressBookTableProps> = ({
   onDelete,
 }) => {
   const isMobile = useMediaQuery({ maxWidth: 768 });
-
+  const PHOTO_URL =
+    import.meta.env.VITE_PHOTO_API_URL || "http://localhost:5270/uploads";
   const getColumns = (): ColumnsType<AddressBookEntry> => {
     const baseColumns: ColumnsType<AddressBookEntry> = [
       {
@@ -33,7 +34,7 @@ export const AddressBookTable: React.FC<AddressBookTableProps> = ({
         render: (photoPath: string) =>
           photoPath ? (
             <Image
-              src={`http://localhost:5270/uploads/${photoPath}`}
+              src={`${PHOTO_URL}/${photoPath}`}
               alt="Profile"
               width={40}
               height={40}
@@ -128,6 +129,7 @@ export const AddressBookTable: React.FC<AddressBookTableProps> = ({
         title: "Actions",
         key: "actions",
         fixed: "right" as const,
+        align: "center" as const,
         // width: isMobile ? 50 : 100,
         render: (_: any, record: AddressBookEntry) => (
           <Space>

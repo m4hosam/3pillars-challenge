@@ -6,5 +6,5 @@ public interface IAddressBookService
     Task<AddressBookEntry> UpdateEntryAsync(int id, AddressBookEntryDTOPartial entryDto);
     Task DeleteEntryAsync(int id);
     Task<IEnumerable<AddressBookEntry>> SearchEntriesAsync(string searchTerm, DateTime? startDate, DateTime? endDate);
-    Task<byte[]> ExportToExcelAsync();
+    Task<byte[]> ExportToExcelAsync(string hostUrl);
 }

@@ -62,7 +62,9 @@ public class AddressBookController : ControllerBase
     [HttpGet("export")]
     public async Task<IActionResult> ExportToExcel()
     {
-        var excelData = await _addressBookService.ExportToExcelAsync();
+        var request = HttpContext.Request;
+        string hostUrl = $"{request.Scheme}://{request.Host.Value}";
+        var excelData = await _addressBookService.ExportToExcelAsync(hostUrl);
         return File(excelData, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "AddressBook.xlsx");
     }
 }

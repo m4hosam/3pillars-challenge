@@ -20,10 +20,15 @@ export const AddressBookForm: React.FC<AddressBookFormProps> = ({
 }) => {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
 
+  const PHOTO_URL =
+    import.meta.env.VITE_PHOTO_API_URL || "http://localhost:5270/uploads";
+
   useEffect(() => {
     if (editingEntry?.photoPath) {
+      setPreviewImage(`${PHOTO_URL}/${editingEntry.photoPath}`);
+    } else {
       setPreviewImage(
-        `http://localhost:5270/uploads/${editingEntry.photoPath}`
+        "https://cdn-icons-png.flaticon.com/512/9131/9131478.png"
       );
     }
   }, [editingEntry]);
