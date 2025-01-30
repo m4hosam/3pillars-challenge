@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+
 
 [ApiController]
 [Route("api/[controller]")]
@@ -11,12 +13,14 @@ public class JobsController : ControllerBase
         _jobService = jobService;
     }
 
+    [Authorize]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Job>>> GetJobs()
     {
         return Ok(await _jobService.GetAllJobsAsync());
     }
 
+    [Authorize]
     [HttpGet("{id}")]
     public async Task<ActionResult<Job>> GetJob(int id)
     {
@@ -25,6 +29,7 @@ public class JobsController : ControllerBase
         return Ok(job);
     }
 
+    [Authorize]
     [HttpPost]
     public async Task<ActionResult<Job>> CreateJob(JobDTO jobDto)
     {
@@ -32,6 +37,7 @@ public class JobsController : ControllerBase
         return CreatedAtAction(nameof(GetJob), new { id = job.Id }, job);
     }
 
+    [Authorize]
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateJob(int id, JobDTO jobDto)
     {
@@ -40,6 +46,7 @@ public class JobsController : ControllerBase
         return NoContent();
     }
 
+    [Authorize]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteJob(int id)
     {

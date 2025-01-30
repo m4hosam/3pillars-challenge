@@ -1,5 +1,6 @@
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using System;
 
 [ApiController]
@@ -13,12 +14,14 @@ public class AddressBookController : ControllerBase
         _addressBookService = addressBookService;
     }
 
+    [Authorize]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<AddressBookEntry>>> GetEntries()
     {
         return Ok(await _addressBookService.GetAllEntriesAsync());
     }
 
+    [Authorize]
     [HttpGet("{id}")]
     public async Task<ActionResult<AddressBookEntry>> GetEntry(int id)
     {
@@ -27,6 +30,7 @@ public class AddressBookController : ControllerBase
         return Ok(entry);
     }
 
+    [Authorize]
     [HttpPost]
     public async Task<ActionResult<AddressBookEntry>> CreateEntry([FromForm] AddressBookEntryDTO entryDto)
     {
@@ -35,6 +39,7 @@ public class AddressBookController : ControllerBase
         return CreatedAtAction(nameof(GetEntry), new { id = entry.Id }, entry);
     }
 
+    [Authorize]
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateEntry(int id, [FromForm] AddressBookEntryDTOPartial entryDto)
     {
@@ -43,6 +48,7 @@ public class AddressBookController : ControllerBase
         return NoContent();
     }
 
+    [Authorize]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteEntry(int id)
     {
@@ -50,15 +56,17 @@ public class AddressBookController : ControllerBase
         return NoContent();
     }
 
+    [Authorize]
     [HttpGet("search")]
     public async Task<ActionResult<IEnumerable<AddressBookEntry>>> SearchEntries(
-        [FromQuery] string searchTerm,
-        [FromQuery] DateTime? startDate,
-        [FromQuery] DateTime? endDate)
+            [FromQuery] string searchTerm,
+            [FromQuery] DateTime? startDate,
+            [FromQuery] DateTime? endDate)
     {
         return Ok(await _addressBookService.SearchEntriesAsync(searchTerm, startDate, endDate));
     }
 
+    [Authorize]
     [HttpGet("export")]
     public async Task<IActionResult> ExportToExcel()
     {

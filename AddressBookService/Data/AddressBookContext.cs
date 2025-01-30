@@ -10,6 +10,7 @@ public class AddressBookContext : DbContext
     public DbSet<AddressBookEntry> AddressBookEntries { get; set; }
     public DbSet<Job> Jobs { get; set; }
     public DbSet<Department> Departments { get; set; }
+    public DbSet<AdminUser> AdminUsers { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
