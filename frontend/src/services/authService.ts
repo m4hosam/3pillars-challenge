@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 import { LoginCredentials, RegisterCredentials } from "../types";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5270/api";
@@ -6,10 +7,12 @@ const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5270/api";
 export const authService = {
   async login(credentials: LoginCredentials): Promise<string> {
     const response = await axios.post(`${API_URL}/auth/login`, credentials);
+
     const { token } = response.data;
-    localStorage.setItem("token", token);
+    Cookies.set("token", token); // Store in cookies
     return token;
   },
+
   async register(
     credentials: RegisterCredentials
   ): Promise<{ success: boolean; message: string }> {
@@ -26,12 +29,13 @@ export const authService = {
       };
     }
   },
+
   logout() {
-    localStorage.removeItem("token");
+    Cookies.remove("token"); // Remove token from cookies
   },
 
   getToken(): string | null {
-    return localStorage.getItem("token");
+    return Cookies.get("token") || null; // Retrieve token from cookies
   },
 
   isAuthenticated(): boolean {

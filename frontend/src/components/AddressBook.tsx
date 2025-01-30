@@ -14,8 +14,6 @@ import type { AddressBookEntry, Job, Department } from "../types";
 import { AddressBookTable } from "./AddressBookTable";
 import { AddressBookModal } from "./AddressBookModal";
 import { AddressBookSearch } from "./AddressBookSearch";
-import { JobModal } from "./Job/JobModal";
-import { DepartmentModal } from "./Department/DepartmentModal";
 import dayjs from "dayjs";
 
 const AddressBook: React.FC = () => {
