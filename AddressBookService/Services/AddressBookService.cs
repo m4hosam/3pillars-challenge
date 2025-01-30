@@ -26,10 +26,9 @@ public class AddressBookService(AddressBookContext context, IWebHostEnvironment 
             .FirstOrDefaultAsync(e => e.Id == id);
     }
 
-    public async Task<AddressBookEntry?> CreateEntryAsync(AddressBookEntryDTO entryDto, string hostUrl)
+    public async Task<AddressBookEntry?> CreateEntryAsync(AddressBookEntryDTO entryDto)
     {
         var photoPath = await SavePhotoAsync(entryDto.Photo);
-        string photoUrl = $"{hostUrl}/uploads/{photoPath}";
 
         var job = await _context.Jobs.FindAsync(entryDto.JobId);
         var department = await _context.Departments.FindAsync(entryDto.DepartmentId);
@@ -54,7 +53,7 @@ public class AddressBookService(AddressBookContext context, IWebHostEnvironment 
             Address = entryDto.Address,
             Email = entryDto.Email,
             Password = HashPassword(entryDto.Password),
-            PhotoPath = photoUrl,
+            PhotoPath = photoPath,
             Age = CalculateAge(entryDto.DateOfBirth)
         };
 
@@ -190,8 +189,8 @@ public class AddressBookService(AddressBookContext context, IWebHostEnvironment 
         {
             await photo.CopyToAsync(fileStream);
         }
-
-        return uniqueFileName;
+        var relativePath = Path.Combine(uniqueFileName);
+        return relativePath;
     }
 
     private void DeletePhoto(string photoPath)
