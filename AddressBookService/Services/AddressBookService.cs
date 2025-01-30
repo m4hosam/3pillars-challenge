@@ -26,9 +26,10 @@ public class AddressBookService(AddressBookContext context, IWebHostEnvironment 
             .FirstOrDefaultAsync(e => e.Id == id);
     }
 
-    public async Task<AddressBookEntry?> CreateEntryAsync(AddressBookEntryDTO entryDto)
+    public async Task<AddressBookEntry?> CreateEntryAsync(AddressBookEntryDTO entryDto, string hostUrl)
     {
         var photoPath = await SavePhotoAsync(entryDto.Photo);
+        string photoUrl = $"{hostUrl}/uploads/{photoPath}";
 
         var job = await _context.Jobs.FindAsync(entryDto.JobId);
         var department = await _context.Departments.FindAsync(entryDto.DepartmentId);
@@ -53,7 +54,7 @@ public class AddressBookService(AddressBookContext context, IWebHostEnvironment 
             Address = entryDto.Address,
             Email = entryDto.Email,
             Password = HashPassword(entryDto.Password),
-            PhotoPath = photoPath,
+            PhotoPath = photoUrl,
             Age = CalculateAge(entryDto.DateOfBirth)
         };
 
@@ -148,6 +149,7 @@ public class AddressBookService(AddressBookContext context, IWebHostEnvironment 
             worksheet.Cells[1, 6].Value = "Age";
             worksheet.Cells[1, 7].Value = "Email";
             worksheet.Cells[1, 8].Value = "Address";
+            worksheet.Cells[1, 9].Value = "Photo Url";
 
             // Add data
             int row = 2;
@@ -161,6 +163,8 @@ public class AddressBookService(AddressBookContext context, IWebHostEnvironment 
                 worksheet.Cells[row, 6].Value = entry.Age;
                 worksheet.Cells[row, 7].Value = entry.Email;
                 worksheet.Cells[row, 8].Value = entry.Address;
+                worksheet.Cells[row, 9].Value = entry.PhotoPath;
+
                 row++;
             }
 
@@ -186,8 +190,8 @@ public class AddressBookService(AddressBookContext context, IWebHostEnvironment 
         {
             await photo.CopyToAsync(fileStream);
         }
-        var relativePath = Path.Combine(uniqueFileName);
-        return relativePath;
+
+        return uniqueFileName;
     }
 
     private void DeletePhoto(string photoPath)

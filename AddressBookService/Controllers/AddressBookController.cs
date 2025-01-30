@@ -30,7 +30,9 @@ public class AddressBookController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<AddressBookEntry>> CreateEntry([FromForm] AddressBookEntryDTO entryDto)
     {
-        var entry = await _addressBookService.CreateEntryAsync(entryDto);
+        var request = HttpContext.Request;
+        string hostUrl = $"{request.Scheme}://{request.Host.Value}";
+        var entry = await _addressBookService.CreateEntryAsync(entryDto, hostUrl);
         if (entry == null) return BadRequest(new { error = "Entry creation failed: Invalid job ID or department ID" });
         return CreatedAtAction(nameof(GetEntry), new { id = entry.Id }, entry);
     }

@@ -47,7 +47,7 @@ export const AddressBookTable: React.FC<AddressBookTableProps> = ({
         dataIndex: "fullName",
         key: "fullName",
         // fixed: isMobile ? ("left" as const) : undefined,
-        width: isMobile ? 50 : 180,
+        // width: isMobile ? 50 : 180,
         sorter: (a: AddressBookEntry, b: AddressBookEntry) =>
           a.fullName.localeCompare(b.fullName),
         render: (text: string) => (
@@ -60,7 +60,7 @@ export const AddressBookTable: React.FC<AddressBookTableProps> = ({
         title: "Job",
         dataIndex: ["job", "title"],
         key: "job",
-        width: isMobile ? 70 : 130,
+        // width: isMobile ? 70 : 130,
         // responsive: ["md"],
         sorter: (a: AddressBookEntry, b: AddressBookEntry) =>
           (a.job?.title || "").localeCompare(b.job?.title || ""),
@@ -69,7 +69,7 @@ export const AddressBookTable: React.FC<AddressBookTableProps> = ({
         title: "Department",
         dataIndex: ["department", "name"],
         key: "department",
-        width: isMobile ? 70 : 130,
+        // width: isMobile ? 70 : 130,
         // responsive: ["lg"],
         sorter: (a: AddressBookEntry, b: AddressBookEntry) =>
           (a.department?.name || "").localeCompare(b.department?.name || ""),
@@ -78,7 +78,7 @@ export const AddressBookTable: React.FC<AddressBookTableProps> = ({
         title: "Mobile",
         dataIndex: "mobileNumber",
         key: "mobileNumber",
-        width: isMobile ? 70 : 130,
+        // width: isMobile ? 70 : 130,
         // responsive: ["sm"],
         sorter: (a: AddressBookEntry, b: AddressBookEntry) =>
           a.mobileNumber.localeCompare(b.mobileNumber),
@@ -87,7 +87,7 @@ export const AddressBookTable: React.FC<AddressBookTableProps> = ({
         title: "Email",
         dataIndex: "email",
         key: "email",
-        width: isMobile ? 70 : 220,
+        // width: isMobile ? 70 : 220,
         // responsive: ["sm"],
         render: (text: string) => (
           <Paragraph ellipsis={{ rows: 1 }} style={{ marginBottom: 0 }}>
@@ -101,7 +101,7 @@ export const AddressBookTable: React.FC<AddressBookTableProps> = ({
         title: "Date of Birth",
         dataIndex: "dateOfBirth",
         key: "dateOfBirth",
-        width: isMobile ? 120 : undefined,
+        // width: isMobile ? 120 : undefined,
         // responsive: ["lg"],
         sorter: (a: AddressBookEntry, b: AddressBookEntry) =>
           a.dateOfBirth.localeCompare(b.dateOfBirth),
@@ -118,7 +118,7 @@ export const AddressBookTable: React.FC<AddressBookTableProps> = ({
         title: "Address",
         dataIndex: "address",
         key: "address",
-        width: isMobile ? 70 : 200,
+        // width: isMobile ? 70 : 200,
         // responsive: ["md"],
         sorter: (a: AddressBookEntry, b: AddressBookEntry) =>
           a.address.localeCompare(b.address),
@@ -128,7 +128,7 @@ export const AddressBookTable: React.FC<AddressBookTableProps> = ({
         title: "Actions",
         key: "actions",
         fixed: "right" as const,
-        width: isMobile ? 50 : 100,
+        // width: isMobile ? 50 : 100,
         render: (_: any, record: AddressBookEntry) => (
           <Space>
             <Tooltip title="Edit">
