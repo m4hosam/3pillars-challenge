@@ -75,9 +75,8 @@ const DepartmentsPage: React.FC = () => {
   };
 
   return (
-    <div className="p-6">
+    <div>
       <div className="mb-4 flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Departments Management</h1>
         <Button type="primary" icon={<PlusOutlined />} onClick={handleCreate}>
           Add New Department
         </Button>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Form, message, Modal, Space } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, DownloadOutlined } from "@ant-design/icons";
 import type { RootState, AppDispatch } from "../store/store";
 import {
   fetchAddressBook,
@@ -35,9 +35,7 @@ const AddressBook: React.FC = () => {
     null
   );
 
-  const [isJobModalVisible, setIsJobModalVisible] = useState(false);
-  const [isDepartmentModalVisible, setIsDepartmentModalVisible] =
-    useState(false);
+  const [exportLoading, setExportLoading] = useState(false);
 
   const [jobs, setJobs] = useState<Job[]>([]);
   const [departments, setDepartments] = useState<Department[]>([]);
@@ -58,11 +56,6 @@ const AddressBook: React.FC = () => {
       message.error("Failed to search address book");
       console.error(error);
     }
-  };
-
-  const handleResetSearch = () => {
-    setIsSearching(false);
-    setSearchResults([]);
   };
 
   // Modified useEffect to depend on updateTrigger
@@ -144,28 +137,52 @@ const AddressBook: React.FC = () => {
       console.error(error);
     }
   };
-
-  const handleCreateJob = async (values: Omit<Job, "id">) => {
-    try {
-      await api.createJob(values);
-      message.success("Job created successfully");
-      setIsJobModalVisible(false);
-      loadJobsAndDepartments(); // Refresh the jobs list
-    } catch (error) {
-      message.error("Failed to create job");
-      console.error(error);
-    }
+  const handleResetSearch = () => {
+    setIsSearching(false);
+    setSearchResults([]);
   };
 
-  const handleCreateDepartment = async (values: Omit<Department, "id">) => {
+  const handleExport = async () => {
     try {
-      await api.createDepartment(values);
-      message.success("Department created successfully");
-      setIsDepartmentModalVisible(false);
-      loadJobsAndDepartments(); // Refresh the departments list
+      setExportLoading(true);
+      const response = await fetch(
+        "http://localhost:5270/api/addressbook/export",
+        {
+          method: "GET",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Export failed");
+      }
+
+      // Get the filename from the Content-Disposition header if available
+      const contentDisposition = response.headers.get("Content-Disposition");
+      let filename = "address-book.xlsx";
+      if (contentDisposition) {
+        const filenameMatch = contentDisposition.match(
+          /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/
+        );
+        if (filenameMatch && filenameMatch[1]) {
+          filename = filenameMatch[1].replace(/['"]/g, "");
+        }
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      message.success("Address book exported successfully");
     } catch (error) {
-      message.error("Failed to create department");
-      console.error(error);
+      console.error("Export error:", error);
+      message.error("Failed to export address book");
+    } finally {
+      setExportLoading(false);
     }
   };
 
@@ -180,6 +197,13 @@ const AddressBook: React.FC = () => {
             className="sm:w-auto w-full"
           >
             Add New Entry
+          </Button>
+          <Button
+            icon={<DownloadOutlined />}
+            onClick={handleExport}
+            loading={exportLoading}
+          >
+            Export to Excel
           </Button>
         </Space>
       </div>

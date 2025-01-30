@@ -65,7 +65,7 @@ const JobsPage: React.FC = () => {
   };
 
   return (
-    <div className="p-6">
+    <div>
       <div className="mb-4">
         <Button type="primary" icon={<PlusOutlined />} onClick={handleCreate}>
           Add New Job
