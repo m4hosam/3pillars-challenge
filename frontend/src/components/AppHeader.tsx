@@ -1,11 +1,19 @@
 import React from "react";
 import { Layout, Menu } from "antd";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import { Link, useNavigate } from "react-router-dom";
+import { authService } from "../services/authService";
 
 const { Header } = Layout;
 
 const AppHeader: React.FC = () => {
+  const navigate = useNavigate();
+  const isAuthenticated = authService.isAuthenticated(); // Check if user is authenticated
+
+  const handleLogout = () => {
+    authService.logout();
+    navigate("/login"); // Redirect to login after logout
+  };
+
   return (
     <Menu
       theme="dark"
@@ -15,14 +23,18 @@ const AppHeader: React.FC = () => {
       <Menu.Item key="/">
         <Link to="/">Address Book</Link>
       </Menu.Item>
-      {/* <div style={{ marginLeft: "auto" }}> */}
       <Menu.Item key="/jobs" style={{ marginLeft: "auto" }}>
         <Link to="/jobs">Jobs</Link>
       </Menu.Item>
       <Menu.Item key="/departments">
         <Link to="/departments">Departments</Link>
       </Menu.Item>
-      {/* </div> */}
+
+      {isAuthenticated && ( // Show logout button only if authenticated
+        <Menu.Item key="logout" onClick={handleLogout} style={{ color: "red" }}>
+          Logout
+        </Menu.Item>
+      )}
     </Menu>
   );
 };

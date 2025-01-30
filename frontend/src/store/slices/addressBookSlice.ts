@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { AddressBookEntry } from "../../types";
-import { api } from "../../api";
+import { api } from "../../services/api";
 
 // Helper function to extract API errors
 const handleApiError = (error: any) => {

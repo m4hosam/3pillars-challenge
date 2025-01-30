@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { Department } from "../../types";
-import { api } from "../../api";
+import { api } from "../../services/api";
 
 const handleApiError = (error: any) => {
   if (error.response && error.response.data) {

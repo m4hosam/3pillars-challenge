@@ -9,7 +9,7 @@ import {
   updateEntry,
   deleteEntry,
 } from "../store/slices/addressBookSlice";
-import { api } from "../api";
+import { api } from "../services/api";
 import type { AddressBookEntry, Job, Department } from "../types";
 import { AddressBookTable } from "./AddressBookTable";
 import { AddressBookModal } from "./AddressBookModal";

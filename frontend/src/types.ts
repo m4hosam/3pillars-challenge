@@ -1,43 +1,14 @@
-interface Job {
+export interface Job {
   id: number;
   title: string;
 }
 
-interface Department {
+export interface Department {
   id: number;
   name: string;
 }
 
-interface AddressBookData {
-  id: number;
-  fullName: string;
-  jobId: number;
-  job: Job;
-  departmentId: number;
-  department: Department;
-  mobileNumber: string;
-  dateOfBirth: string;
-  address: string;
-  email: string;
-  password: string;
-  photoPath: string;
-  age: number;
-}
-
-// interface AddressBookEntry {
-//   id: number;
-//   fullName: string;
-//   jobId: number;
-//   departmentId: number;
-//   mobileNumber: string;
-//   dateOfBirth: string;
-//   address: string;
-//   email: string;
-//   password: string;
-//   photoPath: string;
-//   age: number;
-// }
-interface AddressBookEntry {
+export interface AddressBookEntry {
   id: number;
   fullName: string;
   jobId: number;
@@ -53,4 +24,20 @@ interface AddressBookEntry {
   department?: Department;
 }
 
-export type { Job, Department, AddressBookEntry, AddressBookData };
+export interface LoginCredentials {
+  email: string;
+  password: string;
+}
+
+export interface RegisterCredentials {
+  username: string;
+  email: string;
+  password: string;
+}
+
+export interface AuthState {
+  token: string | null;
+  isAuthenticated: boolean;
+  loading: boolean;
+  error: string | null;
+}
