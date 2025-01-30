@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Menu } from "antd";
+import { Button, Layout, Menu } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { authService } from "../services/authService";
 
@@ -31,8 +31,8 @@ const AppHeader: React.FC = () => {
       </Menu.Item>
 
       {isAuthenticated && ( // Show logout button only if authenticated
-        <Menu.Item key="logout" onClick={handleLogout} style={{ color: "red" }}>
-          Logout
+        <Menu.Item key="logout" style={{ color: "red" }}>
+          <Button onClick={handleLogout}>Logout</Button>
         </Menu.Item>
       )}
     </Menu>
