@@ -1,5 +1,6 @@
 import React from "react";
-import { Table, Button, Image } from "antd";
+import { Table, Button, Space, Tooltip, Image } from "antd";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import type { AddressBookEntry } from "../types";
 
 interface AddressBookTableProps {
@@ -36,44 +37,66 @@ export const AddressBookTable: React.FC<AddressBookTableProps> = ({
       title: "Full Name",
       dataIndex: "fullName",
       key: "fullName",
+      sorter: (a: AddressBookEntry, b: AddressBookEntry) =>
+        a.fullName.localeCompare(b.fullName),
     },
     {
       title: "Job",
       dataIndex: ["job", "title"],
       key: "job",
+      sorter: (a: AddressBookEntry, b: AddressBookEntry) =>
+        (a.job?.title || "").localeCompare(b.job?.title || ""),
     },
     {
       title: "Department",
       dataIndex: ["department", "name"],
       key: "department",
+      sorter: (a: AddressBookEntry, b: AddressBookEntry) =>
+        (a.department?.name || "").localeCompare(b.department?.name || ""),
     },
     {
       title: "Mobile",
       dataIndex: "mobileNumber",
       key: "mobileNumber",
+      sorter: (a: AddressBookEntry, b: AddressBookEntry) =>
+        a.mobileNumber.localeCompare(b.mobileNumber),
     },
     {
       title: "Email",
       dataIndex: "email",
       key: "email",
+      sorter: (a: AddressBookEntry, b: AddressBookEntry) =>
+        a.email.localeCompare(b.email),
     },
     {
       title: "Date of Birth",
       dataIndex: "dateOfBirth",
       key: "dateOfBirth",
+      sorter: (a: AddressBookEntry, b: AddressBookEntry) =>
+        a.dateOfBirth.localeCompare(b.dateOfBirth),
     },
     {
       title: "Actions",
       key: "actions",
       render: (_: any, record: AddressBookEntry) => (
-        <>
-          <Button type="link" onClick={() => onEdit(record)}>
-            Edit
-          </Button>
-          <Button type="link" danger onClick={() => onDelete(record.id)}>
-            Delete
-          </Button>
-        </>
+        <Space>
+          <Tooltip title="Edit">
+            <Button
+              type="primary"
+              icon={<EditOutlined />}
+              onClick={() => onEdit(record)}
+              size="small"
+            />
+          </Tooltip>
+          <Tooltip title="Delete">
+            <Button
+              danger
+              icon={<DeleteOutlined />}
+              onClick={() => onDelete(record.id)}
+              size="small"
+            />
+          </Tooltip>
+        </Space>
       ),
     },
   ];

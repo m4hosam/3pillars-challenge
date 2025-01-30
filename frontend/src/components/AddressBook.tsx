@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Form, message, Modal } from "antd";
+import { Button, Form, message, Modal, Space } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import type { RootState, AppDispatch } from "../store/store";
 import {
@@ -14,6 +14,8 @@ import type { AddressBookEntry, Job, Department } from "../types";
 import { AddressBookTable } from "./AddressBookTable";
 import { AddressBookModal } from "./AddressBookModal";
 import { AddressBookSearch } from "./AddressBookSearch";
+import { JobModal } from "./Job/JobModal";
+import { DepartmentModal } from "./Department/DepartmentModal";
 import dayjs from "dayjs";
 
 const AddressBook: React.FC = () => {
@@ -32,6 +34,11 @@ const AddressBook: React.FC = () => {
   const [editingEntry, setEditingEntry] = useState<AddressBookEntry | null>(
     null
   );
+
+  const [isJobModalVisible, setIsJobModalVisible] = useState(false);
+  const [isDepartmentModalVisible, setIsDepartmentModalVisible] =
+    useState(false);
+
   const [jobs, setJobs] = useState<Job[]>([]);
   const [departments, setDepartments] = useState<Department[]>([]);
   const [updateTrigger, setUpdateTrigger] = useState(0);
@@ -138,12 +145,44 @@ const AddressBook: React.FC = () => {
     }
   };
 
+  const handleCreateJob = async (values: Omit<Job, "id">) => {
+    try {
+      await api.createJob(values);
+      message.success("Job created successfully");
+      setIsJobModalVisible(false);
+      loadJobsAndDepartments(); // Refresh the jobs list
+    } catch (error) {
+      message.error("Failed to create job");
+      console.error(error);
+    }
+  };
+
+  const handleCreateDepartment = async (values: Omit<Department, "id">) => {
+    try {
+      await api.createDepartment(values);
+      message.success("Department created successfully");
+      setIsDepartmentModalVisible(false);
+      loadJobsAndDepartments(); // Refresh the departments list
+    } catch (error) {
+      message.error("Failed to create department");
+      console.error(error);
+    }
+  };
+
   return (
     <div className="p-6">
       <div className="mb-4">
-        <Button type="primary" icon={<PlusOutlined />} onClick={handleCreate}>
-          Add New Entry
-        </Button>
+        <Space>
+          <Button type="primary" icon={<PlusOutlined />} onClick={handleCreate}>
+            Add New Entry
+          </Button>
+          <Button onClick={() => setIsJobModalVisible(true)}>
+            Add New Job
+          </Button>
+          <Button onClick={() => setIsDepartmentModalVisible(true)}>
+            Add New Department
+          </Button>
+        </Space>
       </div>
 
       <AddressBookSearch onSearch={handleSearch} onReset={handleResetSearch} />
@@ -163,6 +202,18 @@ const AddressBook: React.FC = () => {
         departments={departments}
         editingEntry={editingEntry}
         onFinish={handleSubmit}
+      />
+
+      <JobModal
+        visible={isJobModalVisible}
+        onCancel={() => setIsJobModalVisible(false)}
+        onFinish={handleCreateJob}
+      />
+
+      <DepartmentModal
+        visible={isDepartmentModalVisible}
+        onCancel={() => setIsDepartmentModalVisible(false)}
+        onFinish={handleCreateDepartment}
       />
     </div>
   );
