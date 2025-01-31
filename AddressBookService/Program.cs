@@ -76,7 +76,22 @@ app.UseStaticFiles(new StaticFileOptions
 });
 
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
+if (!app.Environment.IsDevelopment())
+{
+    app.Use((context, next) =>
+    {
+        if (context.Request.Headers["X-Forwarded-Proto"] == "https")
+        {
+            context.Request.Scheme = "https";
+        }
+        return next();
+    });
+}
+else
+{
+    app.UseHttpsRedirection();
+}
 app.UseStaticFiles();
 app.UseAuthorization();
 app.MapControllers();
