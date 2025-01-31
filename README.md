@@ -92,6 +92,13 @@ dotnet ef migrations add MyMigration
 dotnet run
 ```
 
+### Docker Setup
+
+```bash\
+cd AddressBookService
+docker build -t addressbook-service .
+```
+
 The API will be available at `https://localhost:5270`
 
 ### Frontend Setup

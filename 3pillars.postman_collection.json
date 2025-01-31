@@ -1,0 +1,668 @@
+{
+	"info": {
+		"_postman_id": "8dd7977e-5662-4904-b396-f1050f59339c",
+		"name": "3pillars",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16229368"
+	},
+	"item": [
+		{
+			"name": "Departments",
+			"item": [
+				{
+					"name": "department",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/departments",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"departments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "department create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Sales\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/departments",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"departments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "department update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Full Stack Developer\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/departments/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"departments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "department delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/departments/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"departments",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Jobs",
+			"item": [
+				{
+					"name": "jobs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/jobs",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"jobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "jobs create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Engineer\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/jobs",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"jobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "jobs update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Full Stack Developers\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/jobs/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"jobs",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "jobs update Copy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/jobs/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"jobs",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Address Book",
+			"item": [
+				{
+					"name": "addressbook",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/addressbook",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"addressbook"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addressbook by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/addressbook/15",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"addressbook",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addressbook create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "FullName",
+									"value": "Samih Ali",
+									"type": "text"
+								},
+								{
+									"key": "JobId",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "DepartmentId",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "MobileNumber",
+									"value": "324234234",
+									"type": "text"
+								},
+								{
+									"key": "DateOfBirth",
+									"value": "2000-01-11",
+									"type": "text"
+								},
+								{
+									"key": "Address",
+									"value": "masr elhora",
+									"type": "text"
+								},
+								{
+									"key": "Email",
+									"value": "gooo@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "Password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "Photo",
+									"type": "file",
+									"src": "/C:/Users/mhosa/Desktop/portofilio/chanell 0png.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/addressbook",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"addressbook"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addressbook update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "FullName",
+									"value": "sdfsdf sada asd  sdfds",
+									"type": "text"
+								},
+								{
+									"key": "JobId",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "DepartmentId",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "MobileNumber",
+									"value": "324234234",
+									"type": "text"
+								},
+								{
+									"key": "DateOfBirth",
+									"value": "2025-01-28",
+									"type": "text"
+								},
+								{
+									"key": "Address",
+									"value": "asdasd asdas das",
+									"type": "text"
+								},
+								{
+									"key": "Email",
+									"value": "asds@sfd.ghg",
+									"type": "text"
+								},
+								{
+									"key": "Password",
+									"value": "123456",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Photo",
+									"type": "file",
+									"src": [
+										"/C:/Users/mhosa/Desktop/portofilio/a281bdf3-b704-437e-879f-954dd0c93cc2.jfif",
+										"/C:/Users/mhosa/Desktop/portofilio/card.jpg"
+									],
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/addressbook/12",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"addressbook",
+								"12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addressbook by id Copy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/addressbook/18",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"addressbook",
+								"18"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addressbook search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/addressbook/search?searchTerm=gmail&startDate=2000-12-12&endDate=2005-01-01",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"addressbook",
+								"search"
+							],
+							"query": [
+								{
+									"key": "searchTerm",
+									"value": "gmail"
+								},
+								{
+									"key": "startDate",
+									"value": "2000-12-12"
+								},
+								{
+									"key": "endDate",
+									"value": "2005-01-01"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addressbook Excel",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `\r",
+									"<table border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>ID</th>\r",
+									"        <th>Camera Name</th>\r",
+									"        <th>Launch Date</th>\r",
+									"        <th>Landing Date</th>\r",
+									"        <th>Time Difference (Days)</th>\r",
+									"        <th>Total Photos / Sol</th>\r",
+									"    </tr>\r",
+									"    {{#each response.photos}}\r",
+									"        <tr id=\"row_{{@key}}\">\r",
+									"            <td>{{id}}</td>\r",
+									"            <td>{{camera.name}}</td>\r",
+									"            <td>{{rover.launch_date}}</td>\r",
+									"            <td>{{rover.landing_date}}</td>\r",
+									"            <td>{{rover.timeDifference}}</td>\r",
+									"            <td>{{totalPhotosDividedBySol}}</td>\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function timeDifference(launchDate, landingDate) {\r",
+									"    var launch = new Date(launchDate);\r",
+									"    var landing = new Date(landingDate);\r",
+									"    var diff = Math.abs(launch - landing);\r",
+									"    var days = Math.ceil(diff / (1000 * 60 * 60 * 24));\r",
+									"    return days;\r",
+									"}\r",
+									"\r",
+									"function totalPhotosDividedBySol(totalPhotos, sol) {\r",
+									"    var result = totalPhotos / sol;\r",
+									"    return result.toFixed(2);\r",
+									"}\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    var visualizerData = pm.response.json();\r",
+									"    \r",
+									"    visualizerData.photos.forEach(((photo,index)=>{\r",
+									"      visualizerData.photos[index] = {\r",
+									"            ...visualizerData.photos[index],\r",
+									"            rover:{\r",
+									"                ...visualizerData.photos[index].rover,\r",
+									"                timeDifference:timeDifference(photo.rover.launch_date,photo.rover.landing_date),\r",
+									"            },\r",
+									"            totalPhotosDividedBySol:totalPhotosDividedBySol(photo.rover.total_photos, photo.sol)\r",
+									"        }\r",
+									"    }));\r",
+									"\r",
+									"    return {response: visualizerData};\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/addressbook/export",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"addressbook",
+								"export"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"mohamed2@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"m4hosam\",\r\n    \"email\": \"mohamed2@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwiZW1haWwiOiJtb2hhbWVkMkBnbWFpbC5jb20iLCJuYmYiOjE3MzgzMjY0MTUsImV4cCI6MTczODMzMDAxNSwiaWF0IjoxNzM4MzI2NDE1LCJpc3MiOiJodHRwczovL3RocmVlcGlsbGFycy1jaGFsbGVuZ2Uub25yZW5kZXIuY29tLyIsImF1ZCI6Imh0dHBzOi8vM3BpbGxhcnMtY2hhbGxlbmdlLnZlcmNlbC5hcHAvIn0.Gw6UXlKp66LBepfqQ6XCir1RP9Z8A28UB9lP-cPdnkc",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
