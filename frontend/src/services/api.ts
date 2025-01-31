@@ -1,6 +1,5 @@
 import axios from "axios";
 import { Department, Job } from "../types";
-import { register } from "module";
 import Cookies from "js-cookie";
 
 const API_BASE_URL =

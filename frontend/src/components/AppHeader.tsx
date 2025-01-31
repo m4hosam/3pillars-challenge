@@ -1,9 +1,7 @@
 import React from "react";
-import { Button, Layout, Menu } from "antd";
+import { Button, Menu } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { authService } from "../services/authService";
-
-const { Header } = Layout;
 
 const AppHeader: React.FC = () => {
   const navigate = useNavigate();
