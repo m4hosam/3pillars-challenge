@@ -41,19 +41,21 @@ builder.Services.AddAuthentication(x =>
     };
 });
 
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-// Adding CORS policy
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: MyAllowSpecificOrigins,
-                      policy =>
-                      {
-                          policy.WithOrigins("https://3pillars-challenge.vercel.app",
-                                    "https://threepillars-challenge-frontend.onrender.com/",
-                                              "http://localhost::5173");
-                      });
+    options.AddDefaultPolicy(policy =>
+    {
+        policy
+            .WithOrigins("https://3pillars-challenge.vercel.app",
+             "http://localhost:5173",
+             "https://threepillars-challenge-frontend.onrender.com")
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .WithExposedHeaders("Content-Disposition") // If you need to expose any headers
+            .SetIsOriginAllowed(origin => true) // Be careful with this in production
+            .AllowCredentials();
+    });
 });
-
 
 // Adding Swagger/OpenAPI support
 builder.Services.AddEndpointsApiExplorer();
@@ -68,7 +70,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(MyAllowSpecificOrigins);
+app.UseCors();
 
 app.UseAuthentication();
 app.UseAuthorization();
