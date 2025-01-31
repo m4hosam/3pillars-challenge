@@ -11,15 +11,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AddressBookService.Migrations
 {
     [DbContext(typeof(AddressBookContext))]
-    [Migration("20250128180425_validation")]
-    partial class validation
+    [Migration("20250131085057_MyMigration")]
+    partial class MyMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.1")
+                .HasAnnotation("ProductVersion", "8.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -73,6 +73,34 @@ namespace AddressBookService.Migrations
                     b.HasIndex("JobId");
 
                     b.ToTable("AddressBookEntries");
+                });
+
+            modelBuilder.Entity("AdminUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AdminUsers");
                 });
 
             modelBuilder.Entity("Department", b =>
