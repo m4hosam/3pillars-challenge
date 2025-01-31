@@ -44,10 +44,13 @@ builder.Services.AddAuthentication(x =>
 // Adding CORS policy
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll",
-        builder => builder.AllowAnyOrigin()
-                          .AllowAnyMethod()
-                          .AllowAnyHeader());
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("https://3pillars-challenge.vercel.app")
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials(); // Add this if you're using credentials
+    });
 });
 
 // Adding Swagger/OpenAPI support
